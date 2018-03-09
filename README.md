@@ -1,4 +1,4 @@
-# RN CHAT
+# RN Chat
 git clone https://github.com/coolworld2015/rn-chat.git
 -------------------------------------------------------------------------------------------------
 git config --global user.name "coolworld2015"
