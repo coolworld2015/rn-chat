@@ -56,5 +56,5 @@ CONFIG -> android/app ->build.gradle /applicationId + versionName
 NAME -> android\app\src\main\res\values\strings
 -------------------------------------------------------------------------------------------------
 "react-native-deprecated-custom-components": "github:facebookarchive/react-native-custom-components"
--------------------------------------------------------------------------------------------------
 "react-native-scrollable-tab-view": "^0.8.0"
+-------------------------------------------------------------------------------------------------
