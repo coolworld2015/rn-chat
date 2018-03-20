@@ -25,7 +25,7 @@ class App extends Component {
 
         window.appConfig = {
             access_token: '',
-			url: 'http://jwt-gai.herokuapp.com/',
+			url: 'http://jwt-chat.herokuapp.com/',
 			onLogOut: this.onLogOut.bind(this),
 			users: {
                 refresh: false

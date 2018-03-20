@@ -17,19 +17,18 @@ class Socket extends Component {
 		super(props);
 		
 		this.state = {
-			width: Dimensions.get('window').width,
 			messages: [],
 			messageText: '',
 			showProgress: true
 		}
 		
-		ws = new WebSocket('ws://ui-socket.herokuapp.com');
+		ws = new WebSocket('wss://jwt-chat.herokuapp.com');
 		
 		ws.onerror = (e) => {
 			this.message = 'error'
 		};
 		
-		ws.onopen = () => {
+		ws.onopen1 = () => {
 			ws.send('Hello ' + appConfig.socket.name + ' !!!'); 
 			this.setState({
 				showProgress: false
@@ -52,7 +51,66 @@ class Socket extends Component {
 		};
 		
 	}
- 
+
+    componentDidMount() {
+		this.setState({
+            width: Dimensions.get('window').width
+        });
+        this.getItems();
+    }
+
+    getItems() {
+		this.setState({
+			showProgress: true,
+			serverError: false,
+            resultsCount: 0,
+            recordsCount: 15,
+            positionY: 0,
+			searchQuery: ''
+        });
+		
+        fetch(appConfig.url + 'api/messages/get', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': appConfig.access_token
+            }
+        })
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({
+                    //dataSource: this.state.dataSource.cloneWithRows(responseData.sort(this.sort).slice(0, 15)),
+					messages: responseData.sort(this.sort).slice(0, 15),
+                    resultsCount: responseData.length,
+                    responseData: responseData,
+                    filteredItems: responseData.sort(this.sort),
+					refreshing: false
+                });
+            })
+            .catch((error) => {
+                this.setState({
+                    serverError: true
+                });
+            })
+            .finally(() => {
+                this.setState({
+                    showProgress: false
+                });
+            });
+    }
+
+    sort(a, b) {
+		let nameA = +a.id, nameB = +b.id;
+		if (nameA < nameB) {
+			return 1
+		}
+		if (nameA > nameB) {
+			return -1
+		}
+		return 0;
+	}
+	
  	goSend() {
 		if (this.state.messageText == '') {
 			this.setState({
