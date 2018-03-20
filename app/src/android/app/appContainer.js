@@ -11,13 +11,7 @@ import Users from '../users/users';
 import UserDetails from '../users/userDetails';
 import UserAdd from '../users/userAdd';
 
-import Cars from '../cars/cars';
-import CarDetails from '../cars/carDetails';
-
-import Search from '../search/search';
-import SearchResults from '../search/searchResults';
-
-import Socket from '../socket/socket';
+import Chat from '../chat/chat';
 
 class AppContainer extends Component {
     constructor(props) {
@@ -37,7 +31,7 @@ class AppContainer extends Component {
  					underlineStyle={{backgroundColor: 'darkblue'}}
 					backgroundColor='white'/>}
             >
-                <SocketTab tabLabel="Chat"/>
+                <ChatTab tabLabel="Chat"/>
                 <UsersTab tabLabel="Users"/>
                 <AuditTab tabLabel="Audit"/>
                 <Logout tabLabel="Logout"/>
@@ -58,7 +52,7 @@ class Logout extends Component {
     }
 }
 
-class SocketTab extends Component {
+class ChatTab extends Component {
 	constructor(props) {
 		super(props);
 		this.routes = [
@@ -70,11 +64,7 @@ class SocketTab extends Component {
 		  
 	renderScene(route, navigator) {
 		switch (route.index) {
-			case 0: return <Socket routes={this.routes} navigator={navigator} />
-					break;			
-			case 1: return <UserDetails data={route.data} routes={this.routes} navigator={navigator} />
-					break;
-			case 2: return <UserAdd data={route.data} routes={this.routes} navigator={navigator} />
+			case 0: return <Chat routes={this.routes} navigator={navigator} />
 					break;
  		}
  	}	
@@ -93,83 +83,7 @@ class SocketTab extends Component {
 		)
 	}
 }
-
-class SearchTab extends Component {
-    constructor(props) {
-        super(props);
-        this.routes = [
-            {title: 'Search', index: 0},
-            {title: 'Search Results', index: 1},
-            {title: 'Cars Details', index: 2}
-        ];
-    }
-
-    renderScene(route, navigator) {
-        switch (route.index) {
-            case 0:
-                return <Search routes={this.routes} navigator={navigator}/>;
-                break;
-            case 1:
-                return <SearchResults data={route.data} routes={this.routes} navigator={navigator}/>;
-                break;
-            case 2:
-                return <CarsDetails data={route.data} routes={this.routes} navigator={navigator}/>;
-                break;
-        }
-    }
-
-    render() {
-        return (
-            <NavigationExperimental.Navigator
-                initialRoute={this.routes[0]}
-                initialRouteStack={this.routes}
-                renderScene={this.renderScene.bind(this)}
-                configureScene={(route, routeStack) =>
-                    NavigationExperimental.Navigator.SceneConfigs.PushFromRight}
-            />
-        )
-    }
-}
-
-class CarsTab extends Component {
-    constructor(props) {
-        super(props);
-        this.routes = [
-            {title: 'Cars', index: 0},
-            {title: 'Cars Details', index: 1}
-        ];
-    }
-
-    renderScene(route, navigator) {
-        switch (route.index) {
-            case 0:
-                return <Cars routes={this.routes} navigator={navigator}/>;
-                break;
-            case 1:
-                return <CarDetails data={route.data} routes={this.routes} navigator={navigator}/>;
-                break;
-            case 2:
-                return <Search data={route.data} routes={this.routes} navigator={navigator}/>;
-                break;
-            case 3:
-                return <SearchResults data={route.data} routes={this.routes} navigator={navigator}/>;
-                break;
-        }
-    }
-
-    render() {
-        return (
-            <NavigationExperimental.Navigator
-                initialRoute={this.routes[0]}
-                initialRouteStack={this.routes}
-                renderScene={this.renderScene.bind(this)}
-                configureScene={(route, routeStack) =>
-                    NavigationExperimental.Navigator.SceneConfigs.PushFromRight}
-            />
-        )
-    }
-}
-
+ 
 class UsersTab extends Component {
     constructor(props) {
         super(props);

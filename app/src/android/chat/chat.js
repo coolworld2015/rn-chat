@@ -12,7 +12,7 @@ import {
 
 import ListItem from './listItem';
 
-class Socket extends Component {
+class Chat extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -290,4 +290,4 @@ const styles = StyleSheet.create({
     }	
 });
 
-export default Socket;
+export default Chat;
