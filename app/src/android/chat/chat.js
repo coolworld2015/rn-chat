@@ -41,7 +41,7 @@ class Chat extends Component {
 			this.state.messages.unshift({
 				id: +new Date(),
 				name: messageObject.split('###')[1],
-				date: d.toTimeString().split(' ')[0],
+				date: messageObject.split('###')[2],
 				message: messageObject.split('###')[0]
 			})
 			
@@ -128,6 +128,29 @@ class Chat extends Component {
 			showProgress: true
 		});
 	}
+
+    refreshData(event) {
+        if (this.state.showProgress === true) {
+            return;
+        }
+
+        if (this.state.filteredItems === undefined) {
+            return;
+        }
+
+        let items, positionY, recordsCount;
+        recordsCount = this.state.recordsCount;
+        positionY = this.state.positionY;
+        items = this.state.filteredItems.slice(0, recordsCount);
+
+        if (event.nativeEvent.contentOffset.y >= positionY) {
+            this.setState({
+				messages: items,
+                recordsCount: recordsCount + 10,
+                positionY: positionY + 400
+            });
+        }
+    }
 	
     onChangeText(text) {
         this.setState({
@@ -178,7 +201,7 @@ class Chat extends Component {
 					//borderRadius: 5,
 					//borderWidth: 5
 				}}>
-					<ScrollView >
+					<ScrollView onScroll={this.refreshData.bind(this)} scrollEventThrottle={16}>
 						{loader}
 						{this.showMessages()}	 
 					</ScrollView>

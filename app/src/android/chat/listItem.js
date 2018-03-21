@@ -23,9 +23,10 @@ class ListItem extends Component {
 					<View style={{
 						margin: 10,
 						marginTop: 10,
-						backgroundColor: '#48BBEC',
+						backgroundColor: 'darkblue',
+						borderColor: 'darkblue',
 						//borderColor: '#48BBEC',
-						borderColor: '#48BBEC',
+						//backgroundColor: '#48BBEC',
 						borderRadius: 25,
 						borderWidth: 5
 					}}>
@@ -34,7 +35,8 @@ class ListItem extends Component {
 							textAlign: 'center',
 							margin: 10,
 							marginTop: 0,
-							backgroundColor: '#48BBEC',
+							//backgroundColor: '#48BBEC',
+							backgroundColor: 'darkblue',
 							width: this.state.width * .85,
 							color: 'white',
 							fontWeight: 'bold'
@@ -46,7 +48,8 @@ class ListItem extends Component {
 							textAlign: 'center',
 							marginTop: -5,
 							marginLeft: 10,
-							backgroundColor: '#48BBEC',
+							//backgroundColor: '#48BBEC',
+							backgroundColor: 'darkblue',
 							width: this.state.width * .85,
 							color: 'white'
 						}}>
@@ -57,7 +60,8 @@ class ListItem extends Component {
 							textAlign: 'center',
 							marginTop: 0,
 							marginLeft: 10,
-							backgroundColor: '#48BBEC',
+							//backgroundColor: '#48BBEC',
+							backgroundColor: 'darkblue',
 							width: this.state.width * .85,
 							color: 'white'
 						}}>
