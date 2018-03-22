@@ -27,8 +27,8 @@ class ListItem extends Component {
 						borderColor: 'darkblue',
 						//borderColor: '#48BBEC',
 						//backgroundColor: '#48BBEC',
-						borderRadius: 25,
-						borderWidth: 5
+						borderRadius: 15,
+						borderWidth: 1
 					}}>
 						<Text style={{		
 							fontSize: 20,
@@ -76,8 +76,8 @@ class ListItem extends Component {
 						marginTop: 10,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						borderRadius: 25,
-						borderWidth: 5
+						borderRadius: 15,
+						borderWidth: 1
 					}}>
 						<Text style={{		
 							fontSize: 20,
