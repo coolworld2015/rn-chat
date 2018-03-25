@@ -10,11 +10,21 @@ import {
 	ScrollView
 } from 'react-native';
 
+import PushNotification from 'react-native-push-notification';
 import ListItem from './listItem';
 
 class Chat extends Component {
 	constructor(props) {
 		super(props);
+		
+		PushNotification.configure({
+			onRegister: function(token) {
+				console.log( 'TOKEN:', token );
+			},
+			onNotification: function(notification) {
+				console.log( 'NOTIFICATION:', notification );
+			}
+		})
 		
 		this.state = {
 			messages: [],
@@ -48,8 +58,14 @@ class Chat extends Component {
 			this.setState({
 				showProgress: false
 			});
+			
+			if (messageObject.split('###')[0] != 'still alive' && appConfig.socket.name != messageObject.split('###')[1]) {
+				PushNotification.localNotificationSchedule({
+					message: "New Message", // (required)
+					date: new Date(Date.now() + (0 * 1000)) // in 60 secs
+				});
+			}
 		};
-		
 	}
 
     componentDidMount() {
