@@ -13,10 +13,21 @@ import {
     Dimensions
 } from 'react-native';
 
+import PushNotification from 'react-native-push-notification';
+
 class Login extends Component {
     constructor(props) {
         super(props);
-
+		
+		PushNotification.configure({
+			onRegister: function(token) {
+				console.log( 'TOKEN:', token );
+			},
+			onNotification: function(notification) {
+				console.log( 'NOTIFICATION:', notification );
+			}
+		})
+		
         this.state = {
             showProgress: false,
             username: '',
@@ -30,6 +41,11 @@ class Login extends Component {
 		this.setState({
 			width: Dimensions.get('window').width
         });
+		
+		PushNotification.localNotificationSchedule({
+		  message: "My Notification Message", // (required)
+		  date: new Date(Date.now() + (5 * 1000)) // in 60 secs
+		});
 	}
 
     onLogin() {
