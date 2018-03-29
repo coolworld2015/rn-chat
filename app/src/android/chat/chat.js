@@ -7,7 +7,8 @@ import {
 	TextInput,
 	Dimensions,
 	ActivityIndicator,
-	ScrollView
+	ScrollView,
+	RefreshControl
 } from 'react-native';
 
 import PushNotification from 'react-native-push-notification';
@@ -28,6 +29,7 @@ class Chat extends Component {
 		
 		this.state = {
 			messages: [],
+			filteredItems: [],
 			messageText: '',
 			showProgress: true
 		}
@@ -53,6 +55,13 @@ class Chat extends Component {
 				name: messageObject.split('###')[1],
 				date: messageObject.split('###')[2],
 				message: messageObject.split('###')[0]
+			})			
+			
+			this.state.filteredItems.unshift({
+				id: +new Date(),
+				name: messageObject.split('###')[1],
+				date: messageObject.split('###')[2],
+				message: messageObject.split('###')[0]
 			})
 			
 			this.setState({
@@ -61,7 +70,8 @@ class Chat extends Component {
 			
 			if (messageObject.split('###')[0] != 'still alive' && appConfig.socket.name != messageObject.split('###')[1]) {
 				PushNotification.localNotificationSchedule({
-					message: "New Message", // (required)
+					//message: "New Message", // (required)
+					message: messageObject.split('###')[1] + ': ' + messageObject.split('###')[0],
 					date: new Date(Date.now() + (0 * 1000)) // in 60 secs
 				});
 			}
@@ -173,7 +183,16 @@ class Chat extends Component {
             messageText: text
         })
     }
+	
+	refreshDataAndroid() {
+        this.setState({
+            showProgress: true,
+            resultsCount: 0
+        });
 
+        this.getItems();
+    }
+	
     showMessages() {
         return this.state.messages.map((item) => {
             return (
@@ -217,7 +236,15 @@ class Chat extends Component {
 					//borderRadius: 5,
 					//borderWidth: 5
 				}}>
-					<ScrollView onScroll={this.refreshData.bind(this)} scrollEventThrottle={16}>
+					<ScrollView onScroll={this.refreshData.bind(this)} scrollEventThrottle={16}
+						refreshControl={
+							<RefreshControl
+								enabled={true}
+								refreshing={this.state.refreshing}
+								onRefresh={this.refreshDataAndroid.bind(this)}
+							/>
+						}
+					>
 						{loader}
 						{this.showMessages()}	 
 					</ScrollView>
